@@ -14,24 +14,24 @@ spec:
         app: word-count-stateful
     spec:
       containers:
-      - name: word-count-stateful
-        image: vplechnoy/apache-spark-testing:0.1
-        command: ["/bin/bash", "-c"]
-        args:
-          - >
-             /opt/spark/bin/spark-submit --master k8s://https://kubernetes \
-              --deploy-mode cluster \
-              --conf spark.executor.instances=2 \
-              --conf spark.executor.memory=4000m \
-              --conf spark.streaming.concurrentJobs=64 \
-              --conf spark.scheduler.mode=FAIR \
-              --conf spark.locality.wait=0s \
-              --conf spark.kubernetes.container.image=vplechnoy/apache-spark-testing:0.1 \
-              --conf spark.kubernetes.container.forcePullImage=true \
-              --conf spark.kubernetes.driver.label.appname=word-count-stateful \
-              --conf spark.kubernetes.executor.label.appname=word-count-stateful \
-              --conf spark.kubernetes.node.selector.func=spark \
-              --class com.esri.realtime.stream.StructuredStreamingApp \
-              local:///opt/spark/apache-spark-testing_2.11-0.1.jar
-        imagePullPolicy: Always
-        
+        - name: word-count-stateful
+          image: vplechnoy/apache-spark-testing:0.1
+          command: ["/bin/bash", "-c"]
+          args:
+            - >
+
+              /opt/spark/bin/spark-submit --master k8s://https://kubernetes \
+               --deploy-mode cluster \
+               --conf spark.executor.instances=2 \
+               --conf spark.executor.memory=4000m \
+               --conf spark.streaming.concurrentJobs=64 \
+               --conf spark.scheduler.mode=FAIR \
+               --conf spark.locality.wait=0s \
+               --conf spark.kubernetes.container.image=vplechnoy/apache-spark-testing:0.1 \
+               --conf spark.kubernetes.driver.label.appname=word-count-stateful \
+               --conf spark.kubernetes.executor.label.appname=word-count-stateful \
+               --conf spark.kubernetes.container.image.pullPolicy=Always \
+               --class com.esri.realtime.stream.StructuredStreamingApp \
+               local:///opt/spark/apache-spark-testing_2.11-0.1.jar
+          imagePullPolicy: Always
+

@@ -3,13 +3,12 @@ kind: Service
 metadata:
   name: appropriate-nc
   labels:
-    app: appropriate
+    app: tcp-client
 spec:
   ports:
     - port: 9999
   selector:
-    app: appropriate
-    tier: nc
+    app: tcp-client
   clusterIP: None
 ---
 apiVersion: apps/v1
@@ -17,23 +16,22 @@ kind: Deployment
 metadata:
   name: tcp-client
   labels:
-    app: nc
+    app: tcp-client
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      app: nc
+      app: tcp-client
   template:
     metadata:
       labels:
-        app: nc
+        app: tcp-client
     spec:
       containers:
-      - name: appropriate-nc
-        image: appropriate/nc
-        ports:
-        - containerPort: 9999
-        command:
-          - sh
-          - -c
-          - "exec tail -f /dev/null"
+        - image: appropriate/nc
+          name: appropriate-nc
+          ports:
+            - containerPort: 9999
+          command:
+            - sh
+            - -c
+            - "exec tail -f /dev/null"
