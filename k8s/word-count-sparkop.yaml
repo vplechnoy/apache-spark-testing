@@ -12,10 +12,13 @@ metadata:
 spec:
   type: Scala
   mode: cluster
-  image: "vplechnoy/apache-spark-testing:0.1"
+  image: "david62243/apache-spark-testing:0.1"
   imagePullPolicy: Always
-  mainClass: com.esri.realtime.stream.StructuredStreamingApp
-  mainApplicationFile: "local:///opt/spark/apache-spark-testing_2.11-0.1.jar"
+  mainClass: com.esri.realtime.stream.FlightLastKnownPositionKeeper
+  mainApplicationFile: "local:///opt/spark/apache-spark-testing-assembly-0.1.jar"
+  arguments:
+    - gateway-cp-kafka:9092
+    - flight-stateful
   sparkVersion: "2.4.0"
   sparkConfigMap: word-count-sparkop-conf
   restartPolicy:

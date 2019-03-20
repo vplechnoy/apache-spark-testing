@@ -83,7 +83,7 @@ object FlightLastKnownPositionKeeper {
       .queryName("FlightLastKnownPositionKeeper")
       .format("memory")
       .outputMode("update")
-//      .option("checkpointLocation", "/data")
+      .option("checkpointLocation", "/data")
       .start()
 
     query.awaitTermination()
