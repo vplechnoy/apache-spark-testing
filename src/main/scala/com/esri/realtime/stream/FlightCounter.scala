@@ -78,7 +78,7 @@ object FlightCounter {
       .format("memory")
       .outputMode("update")
       .trigger(Trigger.ProcessingTime("1 second"))
-//      .option("checkpointLocation", "/data")
+      .option("checkpointLocation", "/data")
       .start()
 
     query.awaitTermination()
