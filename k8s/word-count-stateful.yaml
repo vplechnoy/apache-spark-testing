@@ -19,7 +19,6 @@ spec:
           command: ["/bin/bash", "-c"]
           args:
             - >
-
               /opt/spark/bin/spark-submit --master k8s://https://kubernetes \
                --deploy-mode cluster \
                --conf spark.executor.instances=2 \
@@ -34,4 +33,5 @@ spec:
                --class com.esri.realtime.stream.StructuredStreamingApp \
                local:///opt/spark/apache-spark-testing_2.11-0.1.jar
           imagePullPolicy: Always
-
+          ports:
+            - containerPort: 9999
