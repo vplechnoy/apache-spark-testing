@@ -2,9 +2,11 @@ package com.esri.realtime.stream
 
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.streaming.{GroupState, GroupStateTimeout}
+import org.slf4j.{Logger, LoggerFactory}
 
 object FlightLastKnownPositionKeeper {
 
+  private val LOGGER: Logger = LoggerFactory.getLogger(classOf[Flight])
   // See https://databricks.com/blog/2017/10/17/arbitrary-stateful-processing-in-apache-sparks-structured-streaming.html
 
   case class Flight(flightId: String, flightTime: String,
@@ -28,6 +30,7 @@ object FlightLastKnownPositionKeeper {
         longitude = update.longitude,
         latitude = update.latitude
       )
+      LOGGER.warn(s"Update received for flightId=$flightId, longitude=${update.longitude}, latitude=${update.latitude}!")
       println(s"Update received for flightId=$flightId, longitude=${update.longitude}, latitude=${update.latitude}!")
     }}
 

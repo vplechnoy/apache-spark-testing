@@ -2,8 +2,11 @@ package com.esri.realtime.stream
 
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.streaming.{GroupState, GroupStateTimeout, Trigger}
+import org.slf4j.{Logger, LoggerFactory}
 
 object FlightCounter {
+
+  private val LOGGER: Logger = LoggerFactory.getLogger(classOf[Flight])
 
   case class Flight(flightId: String, flightTime: String,
                     longitude: Double, latitude: Double,
@@ -26,6 +29,7 @@ object FlightCounter {
 
     state.update(flightState)
 
+    LOGGER.warn(s"Flight[$flightId] was seen ${flightState.count} times")
     println(s"Flight[$flightId] was seen ${flightState.count} times")
 
     flightState
