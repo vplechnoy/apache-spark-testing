@@ -1,26 +1,23 @@
-#
-# You'll need to create a config map before creating this SparkApplication 
-#
-# kubectl create configmap word-count-sparkop-conf --from-file=configMap/
-#
 ---
 apiVersion: "sparkoperator.k8s.io/v1beta1"
 kind: SparkApplication
 metadata:
-  name: word-count-stateful
+  name: flight-streaming
   namespace: default
 spec:
   type: Scala
   mode: cluster
-  image: "david62243/apache-spark-testing:0.1"
+  image: "david62243/spark-testing-stateful:0.1"
   imagePullPolicy: Always
-  mainClass: com.esri.realtime.stream.FlightLastKnownPositionKeeper
-  mainApplicationFile: "local:///opt/spark/apache-spark-testing-assembly-0.1.jar"
+  mainClass: com.esri.a4iot.StreamingApp
   arguments:
-    - gateway-cp-kafka:9092
-    - flight-stateful
+    - "gateway-cp-kafka:9092"
+    - "group1"
+    - "flight-stateful"
+    - "15"
+  mainApplicationFile: "local:///opt/spark/spark-testing-stateful-full.jar"
   sparkVersion: "2.4.0"
-  sparkConfigMap: word-count-sparkop-conf
+  sparkConfigMap: spark-conf
   restartPolicy:
     type: Never
   volumes:
